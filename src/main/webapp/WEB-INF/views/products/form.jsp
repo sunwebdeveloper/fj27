@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -12,7 +13,7 @@
 <script src="${contextPath }resources/js/uikit-icons.min.js"></script>
 <title>Novo Livro</title>
 </head>
-<body>
+<body>@Embeddable
 	<div class="uk-container uk-container-small">
 		<section>
 			<c:url var="url" value="/products"/>
@@ -33,6 +34,12 @@
 						<input class="uk-input" type="text" name="numberOfPages" placeholder="Número de Páginas"/>
 					</div>
 		
+					<c:forEach items="${tipos }" var="tipo" varStatus="status">
+						<label>${tipo } :</label>
+						<input type="text" name="precos[${status.index }].valor" />
+						<input type="hidden" name="precos[${status.index }].tipo" value="${tipo }">
+						<br/>
+					</c:forEach>
 					<div>
 						<input class="uk-button uk-button-default" type="submit" value="Salvar" />
 					</div>
