@@ -13,7 +13,7 @@
 <script src="${contextPath }resources/js/uikit-icons.min.js"></script>
 <title>Novo Livro</title>
 </head>
-<body>@Embeddable
+<body>
 	<div class="uk-container uk-container-small">
 		<section>
 			<c:url var="url" value="/products"/>
