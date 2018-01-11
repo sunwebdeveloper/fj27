@@ -16,4 +16,8 @@ public class ProdutoDAO {
 	public void persist(Produto produto){
 		this.em.persist(produto);
 	}
+
+	public Object listarTodos() {
+		return this.em.createQuery("select distinct(p) from Produto p left join fetch p.precos").getResultList();
+	}
 }
