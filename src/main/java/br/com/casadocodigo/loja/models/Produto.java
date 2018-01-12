@@ -1,5 +1,6 @@
 package br.com.casadocodigo.loja.models;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -8,17 +9,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 public class Produto {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
 	private String title;
-	@Lob
+	@Lob @NotBlank
 	private String description;
+	@Min(30)
 	private int numberOfPages;
 
+	@DateTimeFormat(iso=ISO.DATE)
+	private Calendar releaseDate;
+	
+	private String summaryPath;
+	
 	@ElementCollection
 	private List<Preco> precos;
 	
@@ -46,6 +59,22 @@ public class Produto {
 		this.numberOfPages = numberOfPages;
 	}
 	
+	public Calendar getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Calendar releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public String getSummaryPath() {
+		return summaryPath;
+	}
+
+	public void setSummaryPath(String summaryPath) {
+		this.summaryPath = summaryPath;
+	}
+
 	public List<Preco> getPrecos() {
 		return precos;
 	}

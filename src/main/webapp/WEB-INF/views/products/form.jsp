@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -17,21 +17,33 @@
 	<div class="uk-container uk-container-small">
 		<section>
 			<c:url var="url" value="/products"/>
-			<form action="${url }" method="post">
+			<form:form action="${url }" method="POST" commandName="produto" enctype="multipart/form-data">
 				<fieldset class="uk-fieldset">
 		
 					<legend class="uk-legend">Novo Produto</legend>
 		
 					<div class="uk-margin">
-						<input class="uk-input" type="text" name="title" placeholder="Titulo"/>
+						<label for="title">Título</label>
+						<form:input path="title" id="title" cssClass="uk-input"/>
+						<form:errors path="title" />
 					</div>
 		
 					<div class="uk-margin">
-						<textarea class="uk-textarea" rows="5" name="description" placeholder="Descrição"></textarea>
+						<label for="description">Descrição</label>
+						<form:textarea path="description" id="description" rows="5" cssClass="uk-textarea"/>
+						<form:errors path="description" />
 					</div>
 					
 					<div class="uk-margin">
-						<input class="uk-input" type="text" name="numberOfPages" placeholder="Número de Páginas"/>
+						<label for="numberOfPages">Número de páginas</label>
+						<form:input path="numberOfPages" id="numberOfPages" cssClass="uk-input"/>
+						<form:errors path="numberOfPages" />						
+					</div>
+
+					<div class="uk-margin">
+						<label for="releaseDate">Data de lançamento</label>
+						<form:input path="releaseDate" id="releaseDate" type="date"/>
+						<form:errors path="releaseDate" />						
 					</div>
 		
 					<c:forEach items="${tipos }" var="tipo" varStatus="status">
@@ -40,11 +52,18 @@
 						<input type="hidden" name="precos[${status.index }].tipo" value="${tipo }">
 						<br/>
 					</c:forEach>
+
+					<div class="uk-margin">
+						<label for="summary">Sumario do livro</label>
+						<input type="file" id="summary" name="summary">
+						<form:errors path="summaryPath" />						
+					</div>
+
 					<div>
 						<input class="uk-button uk-button-default" type="submit" value="Salvar" />
 					</div>
 				</fieldset>
-			</form>
+			</form:form>
 		</section>
 	</div>
 </body>
