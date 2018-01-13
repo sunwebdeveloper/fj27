@@ -23,6 +23,7 @@ public class AppWebConfiguration {
 		view.setPrefix("/WEB-INF/views/");
 		view.setSuffix(".jsp");
 		
+		view.setExposedContextBeanNames("shoppingCart");
 		return view;
 	}
 	
