@@ -4,6 +4,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -39,6 +41,7 @@ public class ProdutoController {
 		return modelAndView;
 	}
 	
+	@CacheEvict("ultimosLivros")
 	@RequestMapping(method=RequestMethod.POST)
 	@Transactional
 	public ModelAndView save(MultipartFile summary, @Valid Produto produto, BindingResult bindingResult, RedirectAttributes attr){ 
@@ -46,15 +49,18 @@ public class ProdutoController {
 			return this.form(produto);
 		}
 		
-		String webPath = this.fileSaver.write("uploaded-summaries", summary);
-		produto.setSummaryPath(webPath);
+		if(summary!=null && !summary.isEmpty()){
+			String webPath = this.fileSaver.write("uploaded-summaries", summary);
+			produto.setSummaryPath(webPath);
+		}
 		
 		this.dao.persist(produto);
 		
-		attr.addFlashAttribute("sucesso",produto);
+		attr.addFlashAttribute(produto);
 		return new ModelAndView("redirect:products");
 	}
 	
+	@Cacheable("ultimosLivros")
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView listar(){
 		ModelAndView modelAndView = new ModelAndView("products/list");
