@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -17,7 +18,7 @@
 	<div class="uk-container uk-container-small">
 		<section>
 			<c:url var="url" value="/products"/>
-			<form:form action="${url }" method="POST" commandName="produto" enctype="multipart/form-data">
+			<form:form servletRelativeAction="${url }" method="POST" commandName="produto" enctype="multipart/form-data">
 				<fieldset class="uk-fieldset">
 		
 					<legend class="uk-legend">Novo Produto</legend>
