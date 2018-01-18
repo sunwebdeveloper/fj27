@@ -20,7 +20,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -31,7 +33,7 @@ import br.com.casadocodigo.loja.infra.JsonViewResolver;
 @EnableWebMvc
 @EnableCaching
 @ComponentScan(basePackages={"br.com.casadocodigo.loja"})
-public class AppWebConfiguration {
+public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver(){
@@ -98,5 +100,10 @@ public class AppWebConfiguration {
 		resolver.setContentNegotiationManager(manager);
 		
 		return resolver;
+	}
+	
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
 	}
 }
